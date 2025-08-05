@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { appRouter } from './trpc';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
+import { initializeDatabase } from './utils/db';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 
 const startServer = async () => {
   try {
+    await initializeDatabase();
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
